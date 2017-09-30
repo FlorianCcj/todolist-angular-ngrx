@@ -1,0 +1,20 @@
+<style>
+.archive {
+  text-decoration: none;
+  color: #fff;
+}
+.archive:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+</style>
+<div id="menubar">
+<span id="todo-count">
+  <strong>{{getRemainingTasksLength(todos | async)}}</strong> of <strong>{{getTodosLength(todos | async)}} </strong>remaining
+</span>
+<div>
+  <input type="text" placeholder="Filter by text" #text (input)="updateFilterText$.next(text.value)"> &nbsp;&nbsp;
+  <app-status-selector></app-status-selector>
+</div>
+<a (click)="archive$.next()" class="archive">Archive (<strong>{{getTodosLength(todos | async) - getRemainingTasksLength(todos | async)}}</strong>)</a>
+</div>

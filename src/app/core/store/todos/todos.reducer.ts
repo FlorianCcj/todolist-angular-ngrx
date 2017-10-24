@@ -1,58 +1,48 @@
-import {TodosActions} from "./todos.actions";
-import {Todo} from "../../../models/todo.model";
+import * as TodosActions from './todos.actions'
 
-const persistedTodos = JSON.parse(localStorage.getItem('todos') || '[]');
+export interface TodosState {
+  archive: any[];
+  data: any[];
+  pending: boolean;
+  error: any;
+}
 
-const todosInitialState = persistedTodos.map( (todo: {_text: String, done: Boolean}) => {
-    let ret = new Todo(todo._text);
-    ret.done = todo.done;
-    return ret;
-});
+const initialState = {
+  archive: [],
+  data: [],
+  pending: false,
+  error: null
+}
 
-export function todos(state = todosInitialState, {type, payload}) {
-    switch (type){
-        case TodosActions.ADD_TODO:
-            return [payload, ...state];
-
-        case TodosActions.REMOVE_TODO:
-            return state.filter(t => t !== payload);
-
-        case TodosActions.TOGGLE_TODO:
-            return state.map(t => {
-                if (t === payload)
-                    t.done = !t.done;
-                return t;
-            });
-
-        case TodosActions.TOGGLE_EDITING:
-            return state.map(t => {
-                if (t === payload.todo) {
-                    t.editing = payload.editing;
-                    t.text = payload.text && payload.text.trim() !== "" ? payload.text : t.text;
-                }
-                return t;
-            });
-        
-        case TodosActions.UPDATE_TEXT:
-            return state.map(t => {
-                if (t === payload.todo) {
-                    t.text = payload.text.trim() !== "" ?  payload.text.trim() : t.text;
-                    t.editing = false;
-                }
-                return t;
-            });
-
-
-        case TodosActions.TOGGLE_ALL:
-            return state.map(t => {
-                t.done = payload;
-                return t;
-            });
-
-        case TodosActions.ARCHIVE:
-            return state.filter(t => t.done === false);
-
-        default:
-            return state;
-    }
-};
+export function todosReducer( state = initialState, action ): TodosState {
+  switch( action.type ) {
+    case TodosActions.GET_TODOS:
+      return {...state, ...{pending: true, error: null}};
+    case TodosActions.GET_TODOS_SUCCESS:
+      return Object.assign({}, state, {data: action.payload, pending: false})
+    case TodosActions.GET_TODOS_ERROR:
+      return Object.assign({}, state, {pending: false, error: "Error"})
+    case TodosActions.ADD_TODO_SUCCESS:
+      return Object.assign({}, state, {
+        data: [...state.data, action.payload]
+      });
+    case TodosActions.REMOVE_TODO:
+      return Object.assign({}, state, {
+        data: [...state.data.filter((todo) => action.payload.id !== todo.id)]
+      });
+    case TodosActions.ARCHIVE_TODO:
+      return Object.assign({}, state, {
+        data: [...state.data.filter((todo) => action.payload.id !== todo.id)],
+        archive: [...state.archive, action.payload]
+      });
+    case TodosActions.TOGGLE_TODO:
+      return {...state, data: [...state.data.filter((todo) => todo.id !== action.payload.id), action.payload]};
+    case TodosActions.EDIT_TODO:
+      return {...state, data: [
+        ...state.data.filter((todo) => todo.id !== action.payload.id),
+        action.payload
+        ]};
+    default:
+      return {...state};
+  }
+}

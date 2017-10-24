@@ -1,0 +1,13 @@
+<p>
+	<span (click)="toggleTodo(todo)" class="strike" 
+		[class.todo-done]="todo.completed" 
+		[ngClass]="{
+			'todo-undone': !todo.completed,
+			'todo-done': todo.completed
+		}">
+		{{todo.title}}
+	</span>
+	<i (click)="remove(todo)" class="fa fa-times" title="supprimer"></i>
+		<i (click)="archive(todo)" class="fa fa-folder-open" title="archiver">
+	</i>
+</p>

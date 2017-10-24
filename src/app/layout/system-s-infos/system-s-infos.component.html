@@ -1,0 +1,5 @@
+<div *ngFor="let info of systemsInformations" class="{{cssClass(info)}} alert-dismissable">
+	<i class="{{iconClass(info)}}"></i>
+	{{info.message}}
+	<a class="close" (click)="removeInfo(info)">&times;</a>
+</div>

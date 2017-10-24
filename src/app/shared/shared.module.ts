@@ -1,28 +1,26 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StatusPipe } from './pipes/status.pipe'
-import { TextPipe } from './pipes/text.pipe'
-
-const IOMODULE = [
-	CommonModule
-]
-
-const SHARED_PIPES = [
-  TextPipe,
-    StatusPipe,
-]
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
-    ...IOMODULE
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  declarations: [
-    ...SHARED_PIPES
-  ],
+  declarations: [],
   exports: [
-  	...IOMODULE,
-    ...SHARED_PIPES
+  	CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
   ]
-
 })
-export class SharedModule { }
+export class SharedModule {
+	static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule
+    };
+  } 
+}

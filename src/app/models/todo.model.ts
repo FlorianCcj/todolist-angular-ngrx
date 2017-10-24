@@ -1,18 +1,18 @@
-export class Todo {
-    done: Boolean;
-    editing: Boolean;
+export class TodoModel {
+  completed: boolean;
+  title: string;
+  private textProp: string;
+  archive: boolean;
 
-    private _text: String;
-    get text() {
-        return this._text;
-    }
-    set text(value: String) {
-        this._text = value.trim();
-    }
+  get text() {
+    return this.textProp;
+  }
+  set text(value: String) {
+    this.textProp = value.trim();
+  }
 
-    constructor(text: String) {
-        this.done = false;
-        this.editing = false;
-        this.text = text.trim();
-    }
+  constructor(text: String) {
+    this.completed = false;
+    this.textProp = text.trim();
+  }
 }

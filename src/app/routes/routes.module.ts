@@ -1,26 +1,14 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { AppComponent } from './app/app.component';
-import { MenuComponent } from './menu/menu.component';
-import { StatusSelectorComponent } from './status-selector/status-selector.component';
-import { TodoListComponent } from './todo-list/todo-list.component';
 
-const ROUTE_COMPONENTS = [
-	AppComponent, 
-  	MenuComponent, 
-  	StatusSelectorComponent, 
-  	TodoListComponent
-]
+import { routes } from './routes';
 
 @NgModule({
   imports: [
-    SharedModule,
+  	RouterModule.forRoot(routes),
+    SharedModule
   ],
-  declarations: [
-  	...ROUTE_COMPONENTS
-  ],
-  exports: [
-  	...ROUTE_COMPONENTS
-  ]
+  declarations: []
 })
 export class RoutesModule { }

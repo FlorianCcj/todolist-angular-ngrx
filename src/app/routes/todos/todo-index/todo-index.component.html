@@ -1,0 +1,13 @@
+<app-todo-filter [filters]="filters"
+         [active]="activeFilter | async"
+         (changeFilter)="changeFilter($event)">
+</app-todo-filter>
+
+<app-todo-list [todos]="todos | async" 
+	(removeClicked)="removeTodo($event)"
+	(archiveClicked)="archiveTodo($event)"
+	(toggleClicked)="toggleTodo($event)" 
+></app-todo-list>
+
+<app-todo-creation (add)="addTodo($event)" [reset]="addTodoSuccess$ | async"></app-todo-creation>
+

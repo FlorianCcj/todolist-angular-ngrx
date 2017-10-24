@@ -1,0 +1,8 @@
+ <p *ngIf="todos.pending">Loading...</p>
+    <app-todo-detail [todo]="todo" 
+    	(removeClicked)="removeTodo($event)" 
+    	(archiveClicked)="archiveTodo($event)" 
+    	(toggleClicked)="toggleTodo($event)" 
+          *ngFor="let todo of todos.data">
+    </app-todo-detail>
+    <p *ngIf="todos.error">{{todos.error}}</p>

@@ -1,0 +1,15 @@
+[
+    	{
+    		"id": 1, 
+        "title": "Learn ngrx/store", 
+        "completed": false
+      }, {
+        "id": 2, 
+        "title": "Learn ngrx/effects", 
+        "completed": false
+      }, {
+        "id": 3, 
+        "title": "Learn ngrx/core", 
+        "completed": false
+      }
+    ]
